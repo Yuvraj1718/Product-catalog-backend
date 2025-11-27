@@ -1,13 +1,17 @@
 package com.ecom.productcatalog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Category {
 
     @Id
@@ -18,41 +22,13 @@ public class Category {
     @OneToMany(mappedBy = "category",
                cascade = CascadeType.ALL,
                fetch = FetchType.LAZY)
-    @JsonManagedReference
+//    @JsonManagedReference
+//    @JsonIgnoreProperties({"category"})
+    @JsonIgnore
     private Set<Product> products;
-
-    // Constructors
-    public Category() {
-    }
 
     public Category(String name) {
         this.name = name;
-    }
-
-    // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
     }
 
 }
