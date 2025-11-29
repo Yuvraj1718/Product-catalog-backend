@@ -5,10 +5,10 @@ services:
     image: mysql:8
     container_name: mysql_db_docker
     ports:
-      - "3307:3306"
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: Abcd@1234
-      MYSQL_DATABASE: product-catalog
+      MYSQL_DATABASE: product_catalog
     volumes:
       - ./mysql_data:/var/lib/mysql
   springboot:
@@ -16,15 +16,16 @@ services:
     container_name: springboot_app
     environment:
       SERVER_PORT: 8080
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product-catalog
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db_docker:3306/product_catalog
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: Abcd@1234
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_HIBERNATE_DDL_AUTO: create
     ports:
       - "8081:8080"
     depends_on:
       - mysql
+
 volumes:
-  - mysql_data:
+  mysql_data:
 
 
